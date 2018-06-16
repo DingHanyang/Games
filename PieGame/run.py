@@ -1,27 +1,85 @@
-import pygame
 import sys
+import math
+import pygame
 from pygame.locals import *
 
-pygame.init()  # 初始化pygame
+pygame.init()
+
 screen = pygame.display.set_mode((600, 500))
+pygame.display.set_caption("The Pie Game-Press 1,2,3,4")
 myfont = pygame.font.Font(None, 60)
-white = 255, 255, 255
-blue = 0, 0, 255
-# 第二个参数是抗锯齿
-text_image = myfont.render('hello pygame', True, white)
 
-while 1:
+color = 200, 80, 60
+width = 4
+x = 300
+y = 250
+radius = 200
+position = x - radius, y - radius, radius * 2, radius * 2
+
+piece1 = False
+piece2 = False
+piece3 = False
+piece4 = False
+
+while True:
     for event in pygame.event.get():
-        if event.type in (QUIT, KEYDOWN):
+        if event.type == QUIT:
             sys.exit()
-    screen.fill(blue)
-    screen.blit(text_image, (100, 100))
+        elif event.type == KEYUP:
+            if event.key == pygame.K_ESCAPE:  # ESC
+                sys.exit()
+            elif event.key == pygame.K_1:
+                piece1 = True
+            elif event.key == pygame.K_2:
+                piece2 = True
+            elif event.key == pygame.K_3:
+                piece3 = True
+            elif event.key == pygame.K_4:
+                piece4 = True
 
-    # draw a circle
-    color = 255, 255, 0
-    position = 300, 250
-    radius = 100
-    width = 10
-    pygame.draw.circle(screen, color, position, radius, width)
+    screen.fill((0, 0, 200))
+
+    # draw the four numbers
+    textimage1 = myfont.render("1", True, color)
+    screen.blit(textimage1, (x + radius / 2 - 20, y - radius / 2))
+    textimage2 = myfont.render("2", True, color)
+    screen.blit(textimage2, (x - radius / 2, y - radius / 2))
+    textimage3 = myfont.render("3", True, color)
+    screen.blit(textimage3, (x - radius / 2, y + radius / 2 - 20))
+    textimage4 = myfont.render("4", True, color)
+    screen.blit(textimage4, (x + radius / 2 - 20, y + radius / 2 - 20))
+
+    # draw arc,line
+    if piece1:
+        start_angle = math.radians(0)
+        end_angle = math.radians(90)
+        pygame.draw.arc(screen, color, position, start_angle, end_angle, width)
+        pygame.draw.line(screen, color, (x, y), (x + radius, y), width)
+        pygame.draw.line(screen, color, (x, y), (x, y - radius), width)
+
+    if piece2:
+        start_angle = math.radians(90)
+        end_angle = math.radians(180)
+        pygame.draw.arc(screen, color, position, start_angle, end_angle, width)
+        pygame.draw.line(screen, color, (x, y), (x, y - radius), width)
+        pygame.draw.line(screen, color, (x, y), (x - radius, y), width)
+
+    if piece3:
+        start_angle = math.radians(180)
+        end_angle = math.radians(270)
+        pygame.draw.arc(screen, color, position, start_angle, end_angle, width)
+        pygame.draw.line(screen, color, (x, y), (x - radius, y), width)
+        pygame.draw.line(screen, color, (x, y), (x, y + radius), width)
+
+    if piece4:
+        start_angle = math.radians(270)
+        end_angle = math.radians(360)
+        pygame.draw.arc(screen, color, position, start_angle, end_angle, width)
+        pygame.draw.line(screen, color, (x, y), (x, y + radius), width)
+        pygame.draw.line(screen, color, (x, y), (x + radius, y), width)
+
+    # if success,display green
+    if piece1 and piece2 and piece3 and piece4:
+        color = 0, 255, 0
 
     pygame.display.update()
