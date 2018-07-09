@@ -1,0 +1,3 @@
+# map
+OPEN_MAP = []
+SURROUNDING_WALL_MAP = []
