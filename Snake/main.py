@@ -2,7 +2,7 @@ import pygame
 import sys
 from pygame.locals import *
 
-import Snake.constant
+from Snake import constant
 from Snake.food import Food
 from Snake.prop import Prop
 from Snake.snake import Snake
@@ -27,6 +27,19 @@ class SnakeGame(object):
         for event in pygame.event.get():
             if event.type == QUIT:
                 sys.exit()
+
+            keys = pygame.key.get_pressed()
+            self.kb_event(keys)
+
+    def kb_event(self, keys):
+        if keys[K_UP]:
+            print('UP')
+        if keys[K_LEFT]:
+            print('LEFT')
+        if keys[K_DOWN]:
+            print('DOWN')
+        if keys[K_RIGHT]:
+            print('RIGHT')
 
     def draw_map(self):
         """
