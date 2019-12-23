@@ -8,7 +8,7 @@ from Snake.prop import Prop
 from Snake.snake import Snake
 
 
-class SnakeGame(object):
+class SnakeGame( ):
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("Snake")
@@ -24,6 +24,7 @@ class SnakeGame(object):
         self.map = []
 
     def event_manager(self):
+        # 事件管理
         for event in pygame.event.get():
             if event.type == QUIT:
                 sys.exit()
